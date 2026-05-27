@@ -10,7 +10,18 @@ gem "puma", ">= 5.0"
 # gem "jbuilder"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
+gem "bcrypt", "~> 3.1"
+
+# Authentication and authorization
+gem "devise"
+gem "devise-jwt"
+gem "pundit"
+
+# Background jobs and push notifications
+gem "sidekiq"
+
+# JSON serialization
+gem "blueprinter"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
@@ -33,7 +44,7 @@ gem "thruster", require: false
 gem "image_processing", "~> 1.2"
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
-# gem "rack-cors"
+gem "rack-cors"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -47,4 +58,7 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  gem "factory_bot_rails"
+  gem "rspec-rails"
 end
