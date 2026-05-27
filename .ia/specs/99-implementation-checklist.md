@@ -39,9 +39,9 @@ Use este arquivo para acompanhar o progresso do MVP. Marque cada item como concl
 
 ## 4. Auth e Tokens
 
-- [ ] Implementar `POST /api/v1/auth/sign_in`.
-- [ ] Retornar `access_token` com duracao de 15 min.
-- [ ] Retornar `refresh_token` com duracao de 30 dias.
+- [x] Implementar `POST /api/v1/auth/sign_in`.
+- [x] Retornar `access_token` com duracao de 15 min.
+- [x] Retornar `refresh_token` com duracao de 30 dias.
 - [ ] Implementar `DELETE /api/v1/auth/sign_out`.
 - [ ] Implementar `POST /api/v1/auth/refresh`.
 - [ ] Invalidar/rotacionar refresh token quando necessario.
