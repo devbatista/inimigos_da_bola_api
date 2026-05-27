@@ -11,6 +11,7 @@ Use este arquivo para acompanhar o progresso do MVP. Marque cada item como concl
 - [x] Configurar Pundit no controller base.
 - [x] Configurar Devise e devise-jwt.
 - [x] Configurar CORS para API.
+- [x] Configurar ambiente Docker-first de desenvolvimento.
 - [x] Configurar timezone da aplicacao e timestamps em UTC.
 - [x] Criar envelope padrao de erro no `ApplicationController`.
 - [x] Rodar `db:prepare`, RSpec e RuboCop para validar a fundacao.
@@ -26,7 +27,7 @@ Use este arquivo para acompanhar o progresso do MVP. Marque cada item como concl
 - [x] Criar tabela/model `session_stats`.
 - [x] Criar tabela/model `processed_mutations`.
 - [x] Criar tabela/model `refresh_tokens`.
-- [ ] Revisar constraints e indices depois dos primeiros fluxos reais.
+- [x] Revisar constraints e indices depois dos primeiros fluxos reais.
 - [ ] Adicionar factories completas para todos os modelos.
 - [ ] Adicionar specs de validacao/associacao para os modelos principais.
 

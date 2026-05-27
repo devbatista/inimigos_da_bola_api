@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_27_000008) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_27_000009) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
 
-  create_table "attendances", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "attendances", id: :uuid, default: nil, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.uuid "created_by_admin_id"
     t.datetime "deleted_at"
@@ -33,16 +33,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_27_000008) do
     t.index ["user_id"], name: "index_attendances_on_user_id"
     t.index ["weekly_session_id", "guest_name"], name: "index_attendances_on_weekly_session_id_and_guest_name"
     t.index ["weekly_session_id"], name: "index_attendances_on_weekly_session_id"
+    t.check_constraint "kind::text = 'registered'::text AND created_by_admin_id IS NULL OR kind::text = 'guest'::text AND created_by_admin_id IS NOT NULL", name: "attendances_created_by_admin_check"
     t.check_constraint "kind::text = 'registered'::text AND user_id IS NOT NULL AND guest_name IS NULL OR kind::text = 'guest'::text AND user_id IS NULL AND guest_name IS NOT NULL", name: "attendances_kind_data_check"
     t.check_constraint "kind::text = ANY (ARRAY['registered'::character varying, 'guest'::character varying]::text[])", name: "attendances_kind_check"
     t.check_constraint "status::text = ANY (ARRAY['confirmed'::character varying, 'declined'::character varying, 'pending'::character varying]::text[])", name: "attendances_status_check"
+    t.check_constraint "waitlist_position IS NULL OR waitlist_position > 0", name: "attendances_waitlist_position_check"
   end
 
   create_table "processed_mutations", primary_key: "mutation_id", id: :uuid, default: nil, force: :cascade do |t|
     t.datetime "applied_at", null: false
   end
 
-  create_table "refresh_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "refresh_tokens", id: :uuid, default: nil, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "expires_at", null: false
     t.datetime "revoked_at"
@@ -54,7 +56,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_27_000008) do
     t.index ["user_id"], name: "index_refresh_tokens_on_user_id"
   end
 
-  create_table "session_stats", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "session_stats", id: :uuid, default: nil, force: :cascade do |t|
     t.integer "assists", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "deleted_at"
@@ -70,7 +72,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_27_000008) do
     t.check_constraint "goals >= 0", name: "session_stats_goals_check"
   end
 
-  create_table "skill_ratings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "skill_ratings", id: :uuid, default: nil, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "deleted_at"
     t.uuid "evaluated_user_id", null: false
@@ -84,7 +86,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_27_000008) do
     t.check_constraint "score >= 0 AND score <= 100", name: "skill_ratings_score_check"
   end
 
-  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "users", id: :uuid, default: nil, force: :cascade do |t|
     t.boolean "admin", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "deleted_at"
@@ -113,7 +115,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_27_000008) do
     t.check_constraint "skill_score IS NULL OR skill_score >= 0::numeric AND skill_score <= 100::numeric", name: "users_skill_score_check"
   end
 
-  create_table "weekly_sessions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "weekly_sessions", id: :uuid, default: nil, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "deleted_at"
     t.integer "max_players", default: 20, null: false
@@ -121,6 +123,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_27_000008) do
     t.string "status", default: "scheduled", null: false
     t.datetime "updated_at", null: false
     t.integer "version", default: 0, null: false
+    t.index ["scheduled_at"], name: "idx_weekly_sessions_scheduled_at_active_unique", unique: true, where: "(deleted_at IS NULL)"
     t.index ["scheduled_at"], name: "index_weekly_sessions_on_scheduled_at"
     t.check_constraint "max_players > 0", name: "weekly_sessions_max_players_check"
     t.check_constraint "status::text = ANY (ARRAY['scheduled'::character varying, 'closed'::character varying, 'canceled'::character varying]::text[])", name: "weekly_sessions_status_check"
