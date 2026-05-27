@@ -27,6 +27,20 @@ O backend gerencia autenticacao, jogadores, racha semanal, presencas, avaliacoes
 
 O app Rails ainda pode estar no esqueleto. Ao implementar, adicione dependencias e estrutura de forma incremental.
 
+## Docker First
+
+O desenvolvimento e a validacao devem acontecer primeiro via Docker Compose.
+
+Comandos padrao:
+
+- Subir API e dependencias: `docker compose up api`.
+- Preparar banco: `docker compose run --rm api bin/rails db:prepare`.
+- Rodar specs: `docker compose run --rm api bundle exec rspec`.
+- Rodar RuboCop: `docker compose run --rm api bin/rubocop`.
+- Abrir console Rails: `docker compose run --rm api bin/rails console`.
+
+Use comandos locais somente para diagnostico rapido quando o container nao for necessario ou quando o usuario pedir explicitamente.
+
 ## Convencoes Gerais
 
 - Codigo, classes, metodos, arquivos e branches em ingles.
