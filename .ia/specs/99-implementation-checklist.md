@@ -29,7 +29,7 @@ Use este arquivo para acompanhar o progresso do MVP. Marque cada item como concl
 - [x] Criar tabela/model `refresh_tokens`.
 - [x] Revisar constraints e indices depois dos primeiros fluxos reais.
 - [x] Adicionar factories completas para todos os modelos.
-- [ ] Adicionar specs de validacao/associacao para os modelos principais.
+- [x] Adicionar specs de validacao/associacao para os modelos principais.
 
 ## 3. Config do Clube
 
