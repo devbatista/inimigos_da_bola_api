@@ -35,8 +35,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_27_000009) do
     t.index ["weekly_session_id"], name: "index_attendances_on_weekly_session_id"
     t.check_constraint "kind::text = 'registered'::text AND created_by_admin_id IS NULL OR kind::text = 'guest'::text AND created_by_admin_id IS NOT NULL", name: "attendances_created_by_admin_check"
     t.check_constraint "kind::text = 'registered'::text AND user_id IS NOT NULL AND guest_name IS NULL OR kind::text = 'guest'::text AND user_id IS NULL AND guest_name IS NOT NULL", name: "attendances_kind_data_check"
-    t.check_constraint "kind::text = ANY (ARRAY['registered'::character varying, 'guest'::character varying]::text[])", name: "attendances_kind_check"
-    t.check_constraint "status::text = ANY (ARRAY['confirmed'::character varying, 'declined'::character varying, 'pending'::character varying]::text[])", name: "attendances_status_check"
+    t.check_constraint "kind::text = ANY (ARRAY['registered'::character varying::text, 'guest'::character varying::text])", name: "attendances_kind_check"
+    t.check_constraint "status::text = ANY (ARRAY['confirmed'::character varying::text, 'declined'::character varying::text, 'pending'::character varying::text])", name: "attendances_status_check"
     t.check_constraint "waitlist_position IS NULL OR waitlist_position > 0", name: "attendances_waitlist_position_check"
   end
 
@@ -111,7 +111,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_27_000009) do
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.check_constraint "player_type::text = ANY (ARRAY['monthly'::character varying, 'casual'::character varying]::text[])", name: "users_player_type_check"
+    t.check_constraint "player_type::text = ANY (ARRAY['monthly'::character varying::text, 'casual'::character varying::text])", name: "users_player_type_check"
     t.check_constraint "skill_score IS NULL OR skill_score >= 0::numeric AND skill_score <= 100::numeric", name: "users_skill_score_check"
   end
 
@@ -126,7 +126,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_27_000009) do
     t.index ["scheduled_at"], name: "idx_weekly_sessions_scheduled_at_active_unique", unique: true, where: "(deleted_at IS NULL)"
     t.index ["scheduled_at"], name: "index_weekly_sessions_on_scheduled_at"
     t.check_constraint "max_players > 0", name: "weekly_sessions_max_players_check"
-    t.check_constraint "status::text = ANY (ARRAY['scheduled'::character varying, 'closed'::character varying, 'canceled'::character varying]::text[])", name: "weekly_sessions_status_check"
+    t.check_constraint "status::text = ANY (ARRAY['scheduled'::character varying::text, 'closed'::character varying::text, 'canceled'::character varying::text])", name: "weekly_sessions_status_check"
   end
 
   add_foreign_key "attendances", "users"
