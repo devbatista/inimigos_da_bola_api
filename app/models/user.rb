@@ -4,7 +4,6 @@ class User < ApplicationRecord
 
   devise :database_authenticatable,
     :recoverable,
-    :validatable,
     :jwt_authenticatable,
     jwt_revocation_strategy: self
 
@@ -32,7 +31,14 @@ class User < ApplicationRecord
   before_validation :assign_jti, on: :create
 
   validates :name, presence: true
-  validates :email, presence: true, uniqueness: { conditions: -> { active } }
+  validates :email,
+    presence: true,
+    format: { with: Devise.email_regexp },
+    uniqueness: { conditions: -> { active } }
+  validates :password,
+    confirmation: true,
+    length: { within: Devise.password_length },
+    allow_nil: true
   validates :skill_score, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }, allow_nil: true
 
   private
