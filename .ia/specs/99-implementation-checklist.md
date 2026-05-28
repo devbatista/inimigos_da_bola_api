@@ -42,14 +42,14 @@ Use este arquivo para acompanhar o progresso do MVP. Marque cada item como concl
 - [x] Implementar `POST /api/v1/auth/sign_in`.
 - [x] Retornar `access_token` com duracao de 15 min.
 - [x] Retornar `refresh_token` com duracao de 30 dias.
-- [ ] Implementar `DELETE /api/v1/auth/sign_out`.
-- [ ] Implementar `POST /api/v1/auth/refresh`.
-- [ ] Invalidar/rotacionar refresh token quando necessario.
-- [ ] Implementar `POST /api/v1/auth/password`.
-- [ ] Implementar `PUT /api/v1/auth/password`.
-- [ ] Garantir que senha nunca seja salva em texto puro.
-- [ ] Garantir que `encrypted_password` nunca seja serializado.
-- [ ] Adicionar request specs de login, logout, refresh e password.
+- [x] Implementar `DELETE /api/v1/auth/sign_out`.
+- [x] Implementar `POST /api/v1/auth/refresh`.
+- [x] Invalidar/rotacionar refresh token quando necessario.
+- [x] Implementar `POST /api/v1/auth/password`.
+- [x] Implementar `PUT /api/v1/auth/password`.
+- [x] Garantir que senha nunca seja salva em texto puro.
+- [x] Garantir que `encrypted_password` nunca seja serializado.
+- [x] Adicionar request specs de login, logout, refresh e password.
 
 ## 5. Convites
 
