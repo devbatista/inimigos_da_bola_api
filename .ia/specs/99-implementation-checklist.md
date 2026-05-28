@@ -248,17 +248,17 @@ Objetivo: deixar o app mobile testavel contra backend local/docker com dados rea
 
 ### Credenciais e Seeds de Teste
 
-- [ ] Criar seed de admin com email `admin@inimigosdabola.dev`.
-- [ ] Criar seed de admin com senha `inimigos123`.
-- [ ] Criar seed de player comum com email/senha documentados.
-- [ ] Criar alguns players extras para listas, avaliacao e sync.
-- [ ] Garantir pelo menos um goleiro nos seeds.
-- [ ] Garantir pelo menos um mensalista nos seeds.
-- [ ] Garantir pelo menos um casual nos seeds.
-- [ ] Criar sessao semanal atual nos seeds.
-- [ ] Criar presencas em estados diferentes: `confirmed`, `declined`, `pending`.
-- [ ] Criar pelo menos uma presenca avulsa/guest nos seeds.
-- [ ] Documentar todas as credenciais de teste no README.
+- [x] Criar seed de admin com email `admin@inimigosdabola.dev`.
+- [x] Criar seed de admin com senha `inimigos123`.
+- [x] Criar seed de player comum com email/senha documentados.
+- [x] Criar alguns players extras para listas, avaliacao e sync.
+- [x] Garantir pelo menos um goleiro nos seeds.
+- [x] Garantir pelo menos um mensalista nos seeds.
+- [x] Garantir pelo menos um casual nos seeds.
+- [x] Criar sessao semanal atual nos seeds.
+- [x] Criar presencas em estados diferentes: `confirmed`, `declined`, `pending`.
+- [x] Criar pelo menos uma presenca avulsa/guest nos seeds.
+- [x] Documentar todas as credenciais de teste no README.
 
 ### Contratos de Auth para Mobile
 
