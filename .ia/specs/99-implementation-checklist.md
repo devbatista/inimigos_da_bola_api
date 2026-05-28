@@ -264,12 +264,12 @@ Objetivo: deixar o app mobile testavel contra backend local/docker com dados rea
 
 - [x] Implementar `POST /api/v1/auth/sign_in`.
 - [x] Implementar `POST /api/v1/auth/refresh`.
-- [ ] Documentar body exato do login.
-- [ ] Documentar resposta exata do login com `access_token` e `refresh_token`.
-- [ ] Documentar body exato do refresh.
-- [ ] Documentar resposta exata do refresh.
-- [ ] Padronizar erro de access token expirado como `token_expired`.
-- [ ] Retornar erro de token expirado no shape:
+- [x] Documentar body exato do login.
+- [x] Documentar resposta exata do login com `access_token` e `refresh_token`.
+- [x] Documentar body exato do refresh.
+- [x] Documentar resposta exata do refresh.
+- [x] Padronizar erro de access token expirado como `token_expired`.
+- [x] Retornar erro de token expirado no shape:
   ```json
   {
     "error": {
@@ -278,7 +278,7 @@ Objetivo: deixar o app mobile testavel contra backend local/docker com dados rea
     }
   }
   ```
-- [ ] Adicionar request spec para token expirado.
+- [x] Adicionar request spec para token expirado.
 
 ### Endpoints Minimos para Teste Mobile
 
