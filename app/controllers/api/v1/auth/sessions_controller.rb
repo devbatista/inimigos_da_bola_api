@@ -11,16 +11,7 @@ module Api
             return render_error("UNAUTHORIZED", "Email ou senha inválidos.", :unauthorized)
           end
 
-          access_token, payload = ::Auth::AccessToken.issue_for(user)
-          refresh_token, refresh_token_record = RefreshToken.issue_for(user)
-
-          render json: {
-            access_token: access_token,
-            access_token_expires_at: Time.at(payload.fetch("exp")).utc.iso8601,
-            refresh_token: refresh_token,
-            refresh_token_expires_at: refresh_token_record.expires_at.utc.iso8601,
-            user: user_payload(user)
-          }
+          render json: ::Auth::TokenResponse.for(user)
         end
 
         def destroy
@@ -40,16 +31,8 @@ module Api
 
           user = refresh_token_record.user
           refresh_token_record.revoke!
-          access_token, payload = ::Auth::AccessToken.issue_for(user)
-          refresh_token, new_refresh_token_record = RefreshToken.issue_for(user)
 
-          render json: {
-            access_token: access_token,
-            access_token_expires_at: Time.at(payload.fetch("exp")).utc.iso8601,
-            refresh_token: refresh_token,
-            refresh_token_expires_at: new_refresh_token_record.expires_at.utc.iso8601,
-            user: user_payload(user)
-          }
+          render json: ::Auth::TokenResponse.for(user)
         end
 
         private
@@ -74,19 +57,6 @@ module Api
           else
             current_user.refresh_tokens.active.find_each(&:revoke!)
           end
-        end
-
-        def user_payload(user)
-          {
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            phone: user.phone,
-            admin: user.admin,
-            player_type: user.player_type,
-            skill_score: user.skill_score,
-            goalkeeper: user.goalkeeper
-          }
         end
       end
     end

@@ -22,6 +22,9 @@ Rails.application.routes.draw do
         put "password", to: "passwords#update"
       end
 
+      post "users/invitations", to: "users/invitations#create"
+      post "users/accept_invitation", to: "users/invitations#accept"
+
       get "club", to: "club#show"
       get "weekly_sessions/current", to: "weekly_sessions#current", as: :current_weekly_session
       get "weekly_sessions/:id", to: "weekly_sessions#show", as: :weekly_session
