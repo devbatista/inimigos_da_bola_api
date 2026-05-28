@@ -53,19 +53,19 @@ Use este arquivo para acompanhar o progresso do MVP. Marque cada item como concl
 
 ## 5. Convites
 
-- [ ] Implementar `POST /api/v1/users/invitations`.
-- [ ] Permitir convite apenas para admin.
-- [ ] Criar usuario convidado com `admin: false`.
-- [ ] Criar usuario convidado com `player_type: casual`.
-- [ ] Criar usuario convidado sem senha ativa.
-- [ ] Implementar `POST /api/v1/users/accept_invitation`.
-- [ ] No aceite, definir senha e confirmacao.
-- [ ] No aceite, permitir escolher `player_type`.
-- [ ] No aceite, permitir definir `goalkeeper`.
-- [ ] No aceite, ativar usuario e emitir tokens.
-- [ ] Adicionar specs de convite por admin.
-- [ ] Adicionar specs bloqueando convite por usuario comum.
-- [ ] Adicionar specs de aceite de convite.
+- [x] Implementar `POST /api/v1/users/invitations`.
+- [x] Permitir convite apenas para admin.
+- [x] Criar usuario convidado com `admin: false`.
+- [x] Criar usuario convidado com `player_type: casual`.
+- [x] Criar usuario convidado sem senha ativa.
+- [x] Implementar `POST /api/v1/users/accept_invitation`.
+- [x] No aceite, definir senha e confirmacao.
+- [x] No aceite, permitir escolher `player_type`.
+- [x] No aceite, permitir definir `goalkeeper`.
+- [x] No aceite, ativar usuario e emitir tokens.
+- [x] Adicionar specs de convite por admin.
+- [x] Adicionar specs bloqueando convite por usuario comum.
+- [x] Adicionar specs de aceite de convite.
 
 ## 6. Sessao Semanal
 
