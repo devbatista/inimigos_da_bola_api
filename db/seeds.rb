@@ -86,6 +86,39 @@ casual_player = upsert_user!(
   goalkeeper: false
 )
 
+log_seed("Criando 15 players adicionais (3 admins)...")
+extra_players = [
+  { name: "Carlos Admin",   admin: true,  player_type: :monthly, goalkeeper: false },
+  { name: "Bruno Admin",    admin: true,  player_type: :monthly, goalkeeper: false },
+  { name: "Diego Admin",    admin: true,  player_type: :casual,  goalkeeper: false },
+  { name: "Lucas Silva",    admin: false, player_type: :monthly, goalkeeper: false },
+  { name: "Rafael Souza",   admin: false, player_type: :monthly, goalkeeper: false },
+  { name: "Pedro Almeida",  admin: false, player_type: :monthly, goalkeeper: true  },
+  { name: "Felipe Costa",   admin: false, player_type: :monthly, goalkeeper: false },
+  { name: "Gabriel Lima",   admin: false, player_type: :monthly, goalkeeper: false },
+  { name: "Thiago Rocha",   admin: false, player_type: :casual,  goalkeeper: false },
+  { name: "Marcos Pereira", admin: false, player_type: :casual,  goalkeeper: false },
+  { name: "Andre Martins",  admin: false, player_type: :casual,  goalkeeper: true  },
+  { name: "Vinicius Dias",  admin: false, player_type: :casual,  goalkeeper: false },
+  { name: "Eduardo Ramos",  admin: false, player_type: :casual,  goalkeeper: false },
+  { name: "Henrique Melo",  admin: false, player_type: :casual,  goalkeeper: false },
+  { name: "Joao Cardoso",   admin: false, player_type: :casual,  goalkeeper: false }
+]
+
+extra_player_users = extra_players.map do |attrs|
+  email = "#{attrs[:name].downcase.tr(' ', '.')}@inimigosdabola.dev"
+  user = upsert_user!(
+    email: email,
+    password: player_password,
+    name: attrs[:name],
+    admin: attrs[:admin],
+    player_type: attrs[:player_type],
+    goalkeeper: attrs[:goalkeeper]
+  )
+  log_seed("Player adicional criado: #{email} (admin=#{attrs[:admin]})")
+  user
+end
+
 log_seed("Criando sessao semanal atual...")
 session_result = WeeklySessions::CreateCurrent.new.call
 raise session_result.message if session_result.failure?
@@ -93,12 +126,18 @@ raise session_result.message if session_result.failure?
 weekly_session = session_result.data
 log_seed("Sessao semanal atual: #{weekly_session.id} em #{weekly_session.scheduled_at.iso8601}")
 
-[
+base_attendances = [
   [ main_player, :confirmed, nil ],
   [ goalkeeper, :confirmed, nil ],
   [ monthly_player, :declined, nil ],
   [ casual_player, :pending, nil ]
-].each do |user, status, waitlist_position|
+]
+
+extra_confirmed = extra_player_users.first(12).map { |u| [ u, :confirmed, nil ] }
+extra_pending   = extra_player_users[12, 2].to_a.map { |u| [ u, :pending, nil ] }
+extra_declined  = extra_player_users[14, 1].to_a.map { |u| [ u, :declined, nil ] }
+
+(base_attendances + extra_confirmed + extra_pending + extra_declined).each do |user, status, waitlist_position|
   attendance = Attendance.find_or_initialize_by(
     weekly_session: weekly_session,
     user: user,
