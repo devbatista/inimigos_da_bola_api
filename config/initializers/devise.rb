@@ -282,6 +282,10 @@ Devise.setup do |config|
     jwt.expiration_time = 15.minutes.to_i
   end
 
+  config.warden do |manager|
+    manager.failure_app = Auth::FailureApp
+  end
+
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.

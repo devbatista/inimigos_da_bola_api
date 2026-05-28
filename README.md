@@ -65,18 +65,46 @@ Idempotency-Key: <mutation_id>
 
 ## Auth
 
-Login:
+### Login
 
 ```http
 POST /api/v1/auth/sign_in
+Content-Type: application/json
 ```
+
+Body:
 
 ```json
 {
-  "email": "${ADMIN_EMAIL}",
-  "password": "${ADMIN_PASSWORD}"
+  "email": "admin@inimigosdabola.dev",
+  "password": "inimigos123"
 }
 ```
+
+Resposta `200 OK`:
+
+```json
+{
+  "access_token": "<jwt>",
+  "access_token_expires_at": "2026-05-27T20:15:00Z",
+  "refresh_token": "<opaque-token>",
+  "refresh_token_expires_at": "2026-06-26T20:00:00Z",
+  "user": {
+    "id": "0193...",
+    "email": "admin@inimigosdabola.dev",
+    "name": "Admin Inimigos",
+    "phone": "+5511999999999",
+    "admin": true,
+    "player_type": "monthly",
+    "skill_score": 75,
+    "goalkeeper": false
+  }
+}
+```
+
+- `access_token` expira em 15 minutos.
+- `refresh_token` expira em 30 dias.
+- Datas em UTC, formato ISO-8601.
 
 Credenciais seedadas para teste mobile:
 
@@ -92,15 +120,52 @@ mensalista@inimigosdabola.dev / inimigos123
 casual@inimigosdabola.dev / inimigos123
 ```
 
-Refresh:
+### Refresh
 
 ```http
 POST /api/v1/auth/refresh
+Content-Type: application/json
 ```
+
+Body:
 
 ```json
 {
   "refresh_token": "<refresh_token>"
+}
+```
+
+Resposta `200 OK`: mesmo shape do login, com `access_token` e `refresh_token` novos. O `refresh_token` anterior e revogado.
+
+### Erros
+
+Envelope padrao:
+
+```json
+{
+  "error": {
+    "code": "<code>",
+    "message": "<mensagem em pt-BR>"
+  }
+}
+```
+
+Codes relevantes para o cliente mobile:
+
+- `token_expired` (`401`): access token JWT expirado. Mobile deve chamar `POST /api/v1/auth/refresh`.
+- `UNAUTHORIZED` (`401`): credenciais invalidas, refresh token invalido/revogado ou requisicao sem token.
+- `FORBIDDEN` (`403`): autenticado, mas sem permissao para a acao.
+- `NOT_FOUND` (`404`): recurso inexistente.
+- `VALIDATION_ERROR` (`422`): payload invalido.
+
+Exemplo de token expirado (`401`):
+
+```json
+{
+  "error": {
+    "code": "token_expired",
+    "message": "Token expirado."
+  }
 }
 ```
 
