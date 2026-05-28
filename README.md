@@ -78,6 +78,20 @@ POST /api/v1/auth/sign_in
 }
 ```
 
+Credenciais seedadas para teste mobile:
+
+```text
+ADMIN_EMAIL=admin@inimigosdabola.dev
+ADMIN_PASSWORD=inimigos123
+
+PLAYER_EMAIL=player@inimigosdabola.dev
+PLAYER_PASSWORD=inimigos123
+
+goleiro@inimigosdabola.dev / inimigos123
+mensalista@inimigosdabola.dev / inimigos123
+casual@inimigosdabola.dev / inimigos123
+```
+
 Refresh:
 
 ```http
