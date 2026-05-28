@@ -22,12 +22,21 @@ Rails.application.routes.draw do
         put "password", to: "passwords#update"
       end
 
+      get "users/me", to: "users/me#show"
       post "users/invitations", to: "users/invitations#create"
       post "users/accept_invitation", to: "users/invitations#accept"
 
       get "club", to: "club#show"
       get "weekly_sessions/current", to: "weekly_sessions#current", as: :current_weekly_session
       get "weekly_sessions/:id", to: "weekly_sessions#show", as: :weekly_session
+      post "weekly_sessions/:weekly_session_id/attendances", to: "weekly_sessions/attendances#create"
+      post "weekly_sessions/:weekly_session_id/guest_attendances", to: "weekly_sessions/guest_attendances#create"
+      delete "weekly_sessions/:weekly_session_id/guest_attendances/:id", to: "weekly_sessions/guest_attendances#destroy"
+
+      post "skill_ratings", to: "skill_ratings#create"
+
+      get "sync", to: "sync#pull"
+      post "sync/:entity", to: "sync#push", constraints: { entity: /[a-z_]+/ }
     end
   end
 end

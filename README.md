@@ -157,6 +157,10 @@ Codes relevantes para o cliente mobile:
 - `FORBIDDEN` (`403`): autenticado, mas sem permissao para a acao.
 - `NOT_FOUND` (`404`): recurso inexistente.
 - `VALIDATION_ERROR` (`422`): payload invalido.
+- `ATTENDANCE_LOCKED` (`422`): presenca ja nao pode mais ser alterada (depois de `scheduled_at`).
+- `SKILL_RATING_SELF_NOT_ALLOWED` (`422`): tentativa de autoavaliacao.
+- `SKILL_RATING_TOO_SOON` (`422`): tentativa de reavaliar antes de 1 mes.
+- `SYNC_CONFLICT` (`409`): versao do registro no servidor diverge da enviada pelo cliente.
 
 Exemplo de token expirado (`401`):
 
@@ -168,6 +172,112 @@ Exemplo de token expirado (`401`):
   }
 }
 ```
+
+## Endpoints minimos para mobile
+
+Todos exigem `Authorization: Bearer <access_token>`.
+
+### `GET /api/v1/users/me`
+
+Retorna o usuario autenticado. Resposta `200`:
+
+```json
+{
+  "id": "uuid",
+  "email": "...",
+  "name": "...",
+  "phone": null,
+  "admin": false,
+  "player_type": "casual",
+  "skill_score": "75.5",
+  "goalkeeper": false
+}
+```
+
+### `POST /api/v1/weekly_sessions/:id/attendances`
+
+Confirma ou cancela presenca do proprio player. Body:
+
+```json
+{ "status": "confirmed" }
+```
+
+`status` aceita `confirmed` ou `declined`. Quando lotado, a confirmacao entra na lista de espera com `waitlist_position > 0`. Apos `scheduled_at`, retorna `ATTENDANCE_LOCKED`.
+
+### `POST /api/v1/weekly_sessions/:id/guest_attendances` (admin)
+
+Body:
+
+```json
+{ "guest_name": "Visitante" }
+```
+
+Cria presenca avulsa confirmada. Avulsos contam para `max_players`. Usuario comum recebe `403`.
+
+### `DELETE /api/v1/weekly_sessions/:id/guest_attendances/:attendance_id` (admin)
+
+Remove o avulso e promove o primeiro da waitlist se houver vaga aberta. `204 No Content`.
+
+### `POST /api/v1/skill_ratings`
+
+Body:
+
+```json
+{ "evaluated_user_id": "uuid", "score": 80 }
+```
+
+`score` integer 0..100. Recalcula `users.skill_score` do avaliado. Autoavaliacao bloqueada e reavaliacao so depois de 1 mes da ultima.
+
+### `GET /api/v1/sync`
+
+Pull sync. Query params opcionais:
+
+- `since`: ISO-8601 (`2026-05-26T20:00:00Z`). Sem `since` retorna tudo.
+- `entities`: CSV de `users,weekly_sessions,attendances,session_stats`. Sem `entities` retorna todas.
+
+Resposta:
+
+```json
+{
+  "server_time": "2026-05-27T20:15:00Z",
+  "entities": {
+    "users": [ { "id": "...", "...": "...", "deleted_at": null, "version": 3 } ],
+    "weekly_sessions": [ ... ],
+    "attendances": [ ... ],
+    "session_stats": [ ... ]
+  }
+}
+```
+
+Tombstones vem com `deleted_at` preenchido. `skill_ratings` nao sao expostos em pull. `users` nao inclui `encrypted_password`, `jti`, `fcm_token`, tokens de recuperacao ou de convite.
+
+### `POST /api/v1/sync/:entity`
+
+Push sync. Entidades aceitas: `users`, `weekly_sessions`, `session_stats`, `skill_ratings`. `attendances` e bloqueado (`403 FORBIDDEN`).
+
+Headers obrigatorios:
+
+```http
+Content-Type: application/json
+Idempotency-Key: <mutation_uuid>
+```
+
+Body:
+
+```json
+{
+  "op": "update",
+  "record": { "id": "uuid", "version": 3, "...campos...": "..." }
+}
+```
+
+`op` aceita `create`, `update`, `delete`. Em `update`/`delete`, `record.version` deve casar com a versao no servidor — divergencia retorna `409 SYNC_CONFLICT`. A mesma `Idempotency-Key` aplicada novamente retorna `200` com `{ "idempotent_replay": true }` sem reaplicar a mutacao.
+
+Autorizacao por entidade:
+
+- `users`: apenas o proprio usuario.
+- `weekly_sessions` / `session_stats`: apenas admin.
+- `skill_ratings`: apenas o proprio avaliador.
 
 ## CORS
 
