@@ -31,6 +31,10 @@ class RefreshToken < ApplicationRecord
     revoked_at.present?
   end
 
+  def revoke!
+    update!(revoked_at: Time.current)
+  end
+
   private
 
   def assign_uuid_v7

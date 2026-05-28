@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users,
     path: "api/v1/auth",
-    skip: [ :sessions ],
+    skip: [ :sessions, :passwords ],
     path_names: {
       sign_in: "sign_in",
       sign_out: "sign_out",
@@ -16,6 +16,10 @@ Rails.application.routes.draw do
     namespace :v1 do
       namespace :auth do
         post "sign_in", to: "sessions#create"
+        delete "sign_out", to: "sessions#destroy"
+        post "refresh", to: "sessions#refresh"
+        post "password", to: "passwords#create"
+        put "password", to: "passwords#update"
       end
 
       get "club", to: "club#show"
