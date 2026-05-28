@@ -232,7 +232,75 @@ Use este arquivo para acompanhar o progresso do MVP. Marque cada item como concl
 - [ ] Atualizar README com setup local.
 - [ ] Revisar `AGENTS.md` e specs apos implementacao.
 
-## 18. Itens Explicitamente Fora do Escopo
+## 18. Prioridade para Teste Mobile
+
+Objetivo: deixar o app mobile testavel contra backend local/docker com dados reais e contratos documentados.
+
+### Ambiente e Acesso
+
+- [ ] Documentar `API_BASE_URL` local: `http://localhost:3000/api/v1`.
+- [ ] Documentar `API_BASE_URL` Android emulator: `http://10.0.2.2:3000/api/v1`.
+- [ ] Garantir que `docker compose up api` exponha a API em `localhost:3000`.
+- [ ] Confirmar suporte a `Authorization: Bearer <token>`.
+- [ ] Confirmar suporte a `Content-Type: application/json`.
+- [ ] Confirmar suporte a `Idempotency-Key` nos endpoints de sync.
+- [ ] Documentar CORS/headers esperados para o app mobile.
+
+### Credenciais e Seeds de Teste
+
+- [ ] Criar seed de admin com email `admin@inimigosdabola.dev`.
+- [ ] Criar seed de admin com senha `inimigos123`.
+- [ ] Criar seed de player comum com email/senha documentados.
+- [ ] Criar alguns players extras para listas, avaliacao e sync.
+- [ ] Garantir pelo menos um goleiro nos seeds.
+- [ ] Garantir pelo menos um mensalista nos seeds.
+- [ ] Garantir pelo menos um casual nos seeds.
+- [ ] Criar sessao semanal atual nos seeds.
+- [ ] Criar presencas em estados diferentes: `confirmed`, `declined`, `pending`.
+- [ ] Criar pelo menos uma presenca avulsa/guest nos seeds.
+- [ ] Documentar todas as credenciais de teste no README.
+
+### Contratos de Auth para Mobile
+
+- [x] Implementar `POST /api/v1/auth/sign_in`.
+- [x] Implementar `POST /api/v1/auth/refresh`.
+- [ ] Documentar body exato do login.
+- [ ] Documentar resposta exata do login com `access_token` e `refresh_token`.
+- [ ] Documentar body exato do refresh.
+- [ ] Documentar resposta exata do refresh.
+- [ ] Padronizar erro de access token expirado como `token_expired`.
+- [ ] Retornar erro de token expirado no shape:
+  ```json
+  {
+    "error": {
+      "code": "token_expired",
+      "message": "Token expirado."
+    }
+  }
+  ```
+- [ ] Adicionar request spec para token expirado.
+
+### Endpoints Minimos para Teste Mobile
+
+- [ ] Implementar `GET /api/v1/users/me`.
+- [x] Implementar `GET /api/v1/weekly_sessions/current`.
+- [ ] Implementar `POST /api/v1/weekly_sessions/:id/attendances`.
+- [ ] Implementar `POST /api/v1/weekly_sessions/:id/guest_attendances`.
+- [ ] Implementar `DELETE /api/v1/weekly_sessions/:id/guest_attendances/:attendance_id`.
+- [ ] Implementar `POST /api/v1/skill_ratings`.
+- [ ] Implementar `GET /api/v1/sync`.
+- [ ] Implementar `POST /api/v1/sync/:entity`.
+
+### Shapes de JSON para Mobile
+
+- [ ] Criar/documentar shape de `user`.
+- [x] Criar shape de `weekly_session`.
+- [ ] Criar/documentar shape de `attendance`.
+- [ ] Criar/documentar shape de erro padrao.
+- [ ] Garantir que `encrypted_password` nunca aparece em payload mobile.
+- [ ] Garantir que notas individuais de habilidade nao aparecem em payload mobile.
+
+## 19. Itens Explicitamente Fora do Escopo
 
 - [ ] Confirmar que nao foi criada tabela de partidas curtas.
 - [ ] Confirmar que nao foi criada tabela de times sorteados.
