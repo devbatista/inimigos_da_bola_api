@@ -238,13 +238,13 @@ Objetivo: deixar o app mobile testavel contra backend local/docker com dados rea
 
 ### Ambiente e Acesso
 
-- [ ] Documentar `API_BASE_URL` local: `http://localhost:3000/api/v1`.
-- [ ] Documentar `API_BASE_URL` Android emulator: `http://10.0.2.2:3000/api/v1`.
-- [ ] Garantir que `docker compose up api` exponha a API em `localhost:3000`.
-- [ ] Confirmar suporte a `Authorization: Bearer <token>`.
-- [ ] Confirmar suporte a `Content-Type: application/json`.
-- [ ] Confirmar suporte a `Idempotency-Key` nos endpoints de sync.
-- [ ] Documentar CORS/headers esperados para o app mobile.
+- [x] Documentar `API_BASE_URL` local: `http://localhost:4500/api/v1`.
+- [x] Documentar `API_BASE_URL` Android emulator: `http://10.0.2.2:4500/api/v1`.
+- [x] Garantir que `docker compose up api` exponha a API em `localhost:4500`.
+- [x] Confirmar suporte a `Authorization: Bearer <token>`.
+- [x] Confirmar suporte a `Content-Type: application/json`.
+- [x] Confirmar suporte a `Idempotency-Key` nos endpoints de sync.
+- [x] Documentar CORS/headers esperados para o app mobile.
 
 ### Credenciais e Seeds de Teste
 
