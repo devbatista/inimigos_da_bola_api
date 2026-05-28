@@ -6,7 +6,7 @@ module Api
       def current
         authorize WeeklySession, :current?
 
-        result = WeeklySessions::CreateCurrent.new.call
+        result = ::WeeklySessions::CreateCurrent.new.call
         if result.success?
           render json: WeeklySessionBlueprint.render_as_hash(result.data)
         else

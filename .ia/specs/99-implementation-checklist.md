@@ -83,50 +83,50 @@ Use este arquivo para acompanhar o progresso do MVP. Marque cada item como concl
 
 ## 7. Presenca do Player
 
-- [ ] Implementar service `Attendance::Confirm`.
-- [ ] Implementar service `Attendance::Decline`.
-- [ ] Implementar service `Attendance::PromoteWaitlist`.
-- [ ] Implementar `POST /api/v1/weekly_sessions/:id/attendances`.
+- [x] Implementar service `Attendance::Confirm`.
+- [x] Implementar service `Attendance::Decline`.
+- [x] Implementar service `Attendance::PromoteWaitlist`.
+- [x] Implementar `POST /api/v1/weekly_sessions/:id/attendances`.
 - [ ] Implementar `GET /api/v1/weekly_sessions/:id/attendances`.
-- [ ] Confirmar presenca propria de player cadastrado.
-- [ ] Cancelar/declinar presenca propria de player cadastrado.
-- [ ] Bloquear confirmacao/cancelamento de outro player.
-- [ ] Aplicar limite de `max_players`.
-- [ ] Colocar novas confirmacoes em lista de espera quando lotado.
-- [ ] Promover primeiro da lista de espera quando confirmado cancela.
-- [ ] Bloquear alteracoes depois de `scheduled_at`.
-- [ ] Garantir que presencas nao entrem no push sync.
-- [ ] Adicionar request specs do fluxo de presenca.
-- [ ] Adicionar specs de lista de espera e promocao.
+- [x] Confirmar presenca propria de player cadastrado.
+- [x] Cancelar/declinar presenca propria de player cadastrado.
+- [x] Bloquear confirmacao/cancelamento de outro player.
+- [x] Aplicar limite de `max_players`.
+- [x] Colocar novas confirmacoes em lista de espera quando lotado.
+- [x] Promover primeiro da lista de espera quando confirmado cancela.
+- [x] Bloquear alteracoes depois de `scheduled_at`.
+- [x] Garantir que presencas nao entrem no push sync.
+- [x] Adicionar request specs do fluxo de presenca.
+- [x] Adicionar specs de lista de espera e promocao.
 
 ## 8. Presenca Avulsa do Admin
 
-- [ ] Implementar service `GuestAttendance::Create`.
-- [ ] Implementar service `GuestAttendance::Destroy`.
-- [ ] Implementar `POST /api/v1/weekly_sessions/:id/guest_attendances`.
-- [ ] Implementar `DELETE /api/v1/weekly_sessions/:id/guest_attendances/:attendance_id`.
-- [ ] Permitir criar/remover avulso apenas para admin.
-- [ ] Exigir `guest_name`.
-- [ ] Garantir que presenca avulsa nao crie `User`.
-- [ ] Contabilizar avulso em confirmados e lista de espera.
+- [x] Implementar service `GuestAttendance::Create`.
+- [x] Implementar service `GuestAttendance::Destroy`.
+- [x] Implementar `POST /api/v1/weekly_sessions/:id/guest_attendances`.
+- [x] Implementar `DELETE /api/v1/weekly_sessions/:id/guest_attendances/:attendance_id`.
+- [x] Permitir criar/remover avulso apenas para admin.
+- [x] Exigir `guest_name`.
+- [x] Garantir que presenca avulsa nao crie `User`.
+- [x] Contabilizar avulso em confirmados e lista de espera.
 - [ ] Atualizar contador publico de confirmados.
-- [ ] Adicionar request specs de avulso por admin.
-- [ ] Adicionar specs bloqueando usuario comum.
+- [x] Adicionar request specs de avulso por admin.
+- [x] Adicionar specs bloqueando usuario comum.
 
 ## 9. Avaliacoes de Habilidade
 
-- [ ] Implementar service `SkillRatings::Upsert`.
-- [ ] Implementar service `SkillRatings::RecalculateScore`.
-- [ ] Implementar `POST /api/v1/skill_ratings`.
-- [ ] Validar `score` entre 0 e 100.
-- [ ] Bloquear autoavaliacao.
-- [ ] Permitir apenas uma nota ativa por avaliador/avaliado.
-- [ ] Bloquear reavaliacao antes de 1 mes.
-- [ ] Recalcular `users.skill_score` ao criar/atualizar nota.
-- [ ] Garantir que notas individuais nunca sejam exibidas.
+- [x] Implementar service `SkillRatings::Upsert`.
+- [x] Implementar service `SkillRatings::RecalculateScore`.
+- [x] Implementar `POST /api/v1/skill_ratings`.
+- [x] Validar `score` entre 0 e 100.
+- [x] Bloquear autoavaliacao.
+- [x] Permitir apenas uma nota ativa por avaliador/avaliado.
+- [x] Bloquear reavaliacao antes de 1 mes.
+- [x] Recalcular `users.skill_score` ao criar/atualizar nota.
+- [x] Garantir que notas individuais nunca sejam exibidas.
 - [ ] Garantir que usuario veja apenas o proprio `skill_score`.
-- [ ] Adicionar request specs de avaliacao.
-- [ ] Adicionar specs de recalculo de media.
+- [x] Adicionar request specs de avaliacao.
+- [x] Adicionar specs de recalculo de media.
 
 ## 10. Stats e Ranking
 
@@ -159,32 +159,32 @@ Use este arquivo para acompanhar o progresso do MVP. Marque cada item como concl
 
 ## 12. Sync Pull
 
-- [ ] Implementar service `Sync::PullChanges`.
-- [ ] Implementar `GET /api/v1/sync`.
-- [ ] Aceitar parametro `since`.
-- [ ] Aceitar parametro `entities`.
-- [ ] Retornar `server_time`.
-- [ ] Retornar registros alterados desde `since`.
-- [ ] Incluir tombstones com `deleted_at`.
-- [ ] Nao retornar `encrypted_password`.
-- [ ] Nao retornar `skill_ratings` individuais de outros usuarios.
-- [ ] Retornar entidades permitidas: `users`, `weekly_sessions`, `attendances`, `session_stats`.
-- [ ] Adicionar request specs de pull sync.
+- [x] Implementar service `Sync::PullChanges`.
+- [x] Implementar `GET /api/v1/sync`.
+- [x] Aceitar parametro `since`.
+- [x] Aceitar parametro `entities`.
+- [x] Retornar `server_time`.
+- [x] Retornar registros alterados desde `since`.
+- [x] Incluir tombstones com `deleted_at`.
+- [x] Nao retornar `encrypted_password`.
+- [x] Nao retornar `skill_ratings` individuais de outros usuarios.
+- [x] Retornar entidades permitidas: `users`, `weekly_sessions`, `attendances`, `session_stats`.
+- [x] Adicionar request specs de pull sync.
 
 ## 13. Sync Push
 
-- [ ] Implementar service `Sync::ApplyMutation`.
-- [ ] Implementar `POST /api/v1/sync/{entity}`.
-- [ ] Exigir header `Idempotency-Key`.
-- [ ] Registrar `mutation_id` em `processed_mutations`.
-- [ ] Garantir idempotencia para mutacoes repetidas.
-- [ ] Implementar operacoes `create`, `update` e `delete` quando aplicavel.
-- [ ] Validar lock otimista por `version`.
-- [ ] Retornar `409 Conflict` em conflito de versao.
-- [ ] Retornar `422 Unprocessable Entity` em payload invalido.
-- [ ] Bloquear push sync de `attendances`.
-- [ ] Adicionar request specs de push sync.
-- [ ] Adicionar specs de conflito e idempotencia.
+- [x] Implementar service `Sync::ApplyMutation`.
+- [x] Implementar `POST /api/v1/sync/{entity}`.
+- [x] Exigir header `Idempotency-Key`.
+- [x] Registrar `mutation_id` em `processed_mutations`.
+- [x] Garantir idempotencia para mutacoes repetidas.
+- [x] Implementar operacoes `create`, `update` e `delete` quando aplicavel.
+- [x] Validar lock otimista por `version`.
+- [x] Retornar `409 Conflict` em conflito de versao.
+- [x] Retornar `422 Unprocessable Entity` em payload invalido.
+- [x] Bloquear push sync de `attendances`.
+- [x] Adicionar request specs de push sync.
+- [x] Adicionar specs de conflito e idempotencia.
 
 ## 14. Jobs de Manutencao
 
@@ -195,12 +195,12 @@ Use este arquivo para acompanhar o progresso do MVP. Marque cada item como concl
 
 ## 15. Serializers e Privacidade
 
-- [ ] Criar blueprints/serializers para `User`.
-- [ ] Criar blueprints/serializers para `Attendance`.
-- [ ] Criar blueprints/serializers para `SkillRating` somente quando seguro.
-- [ ] Criar blueprints/serializers para `SessionStat`.
-- [ ] Revisar todos os payloads para nao expor dados sensiveis.
-- [ ] Garantir que `encrypted_password`, tokens e notas individuais nao vazem.
+- [x] Criar blueprints/serializers para `User`.
+- [x] Criar blueprints/serializers para `Attendance`.
+- [x] Criar blueprints/serializers para `SkillRating` somente quando seguro.
+- [x] Criar blueprints/serializers para `SessionStat`.
+- [x] Revisar todos os payloads para nao expor dados sensiveis.
+- [x] Garantir que `encrypted_password`, tokens e notas individuais nao vazem.
 
 ## 16. Policies
 
@@ -282,23 +282,23 @@ Objetivo: deixar o app mobile testavel contra backend local/docker com dados rea
 
 ### Endpoints Minimos para Teste Mobile
 
-- [ ] Implementar `GET /api/v1/users/me`.
+- [x] Implementar `GET /api/v1/users/me`.
 - [x] Implementar `GET /api/v1/weekly_sessions/current`.
-- [ ] Implementar `POST /api/v1/weekly_sessions/:id/attendances`.
-- [ ] Implementar `POST /api/v1/weekly_sessions/:id/guest_attendances`.
-- [ ] Implementar `DELETE /api/v1/weekly_sessions/:id/guest_attendances/:attendance_id`.
-- [ ] Implementar `POST /api/v1/skill_ratings`.
-- [ ] Implementar `GET /api/v1/sync`.
-- [ ] Implementar `POST /api/v1/sync/:entity`.
+- [x] Implementar `POST /api/v1/weekly_sessions/:id/attendances`.
+- [x] Implementar `POST /api/v1/weekly_sessions/:id/guest_attendances`.
+- [x] Implementar `DELETE /api/v1/weekly_sessions/:id/guest_attendances/:attendance_id`.
+- [x] Implementar `POST /api/v1/skill_ratings`.
+- [x] Implementar `GET /api/v1/sync`.
+- [x] Implementar `POST /api/v1/sync/:entity`.
 
 ### Shapes de JSON para Mobile
 
-- [ ] Criar/documentar shape de `user`.
+- [x] Criar/documentar shape de `user`.
 - [x] Criar shape de `weekly_session`.
-- [ ] Criar/documentar shape de `attendance`.
-- [ ] Criar/documentar shape de erro padrao.
-- [ ] Garantir que `encrypted_password` nunca aparece em payload mobile.
-- [ ] Garantir que notas individuais de habilidade nao aparecem em payload mobile.
+- [x] Criar/documentar shape de `attendance`.
+- [x] Criar/documentar shape de erro padrao.
+- [x] Garantir que `encrypted_password` nunca aparece em payload mobile.
+- [x] Garantir que notas individuais de habilidade nao aparecem em payload mobile.
 
 ## 19. Itens Explicitamente Fora do Escopo
 
