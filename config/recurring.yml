@@ -9,7 +9,21 @@
 #     priority: 2
 #     schedule: at 5am every day
 
+<%
+  # Converte RACHA_WEEKDAY em numero do cron (0=domingo .. 6=sabado).
+  weekday_map = {
+    "sunday" => 0, "monday" => 1, "tuesday" => 2, "wednesday" => 3,
+    "thursday" => 4, "friday" => 5, "saturday" => 6
+  }
+  racha_weekday = ENV.fetch("RACHA_WEEKDAY", "monday").downcase
+  cron_weekday = weekday_map.fetch(racha_weekday, 1)
+%>
+
 production:
   clear_solid_queue_finished_jobs:
     command: "SolidQueue::Job.clear_finished_in_batches(sleep_between_batches: 0.3)"
     schedule: every hour at minute 12
+  create_current_weekly_session:
+    class: WeeklySessions::CreateCurrentJob
+    queue: default
+    schedule: "0 8 * * <%= cron_weekday %>"
