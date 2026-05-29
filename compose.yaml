@@ -17,6 +17,22 @@ services:
       - db
       - redis
 
+  sidekiq:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    env_file:
+      - .env
+    environment:
+      DB_HOST: db
+    volumes:
+      - .:/rails
+      - bundle:/usr/local/bundle
+    depends_on:
+      - db
+      - redis
+
   db:
     image: postgres:16-alpine
     environment:

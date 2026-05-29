@@ -1,0 +1,15 @@
+<%
+  # Converte RACHA_WEEKDAY em numero do cron (0=domingo .. 6=sabado).
+  weekday_map = {
+    "sunday" => 0, "monday" => 1, "tuesday" => 2, "wednesday" => 3,
+    "thursday" => 4, "friday" => 5, "saturday" => 6
+  }
+  racha_weekday = ENV.fetch("RACHA_WEEKDAY", "monday").downcase
+  cron_weekday = weekday_map.fetch(racha_weekday, 1)
+%>
+
+create_current_weekly_session:
+  cron: "0 8 * * <%= cron_weekday %>"
+  class: "WeeklySessions::CreateCurrentJob"
+  queue: default
+  description: "Cria a sessao semanal do racha as 08h do dia configurado em RACHA_WEEKDAY."
