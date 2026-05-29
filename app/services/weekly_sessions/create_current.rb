@@ -32,15 +32,13 @@ module WeeklySessions
       scheduled_at.beginning_of_day..scheduled_at.end_of_day
     end
 
+    # Proxima ocorrencia do dia do racha a partir de hoje (inclusive).
+    # Como o job abre a sessao na quarta anterior, isso resolve para o racha
+    # da semana seguinte.
     def scheduled_date
       today = Time.zone.today
-      start_of_week = today.beginning_of_week(:monday)
-      start_of_week + weekday_offset.days
-    end
-
-    def weekday_offset
-      wday = WEEKDAYS.fetch(racha_weekday)
-      wday.zero? ? 6 : wday - 1
+      days_ahead = (WEEKDAYS.fetch(racha_weekday) - today.wday) % 7
+      today + days_ahead.days
     end
 
     def racha_weekday

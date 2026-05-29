@@ -20,9 +20,16 @@ module WeeklySessions
       Notifications::Push.new(
         audience: :all,
         title: "Racha aberto",
-        body: "O racha de hoje esta aberto. Voce vai?",
+        body: "O racha de #{racha_label(weekly_session.scheduled_at)} esta aberto. Voce vai?",
         data: { weekly_session_id: weekly_session.id, type: "weekly_session_open" }
       ).call
+    end
+
+    # Ex.: "segunda (02/06)".
+    def racha_label(scheduled_at)
+      weekdays = %w[domingo segunda terca quarta quinta sexta sabado]
+      date = scheduled_at.in_time_zone
+      "#{weekdays[date.wday]} (#{date.strftime('%d/%m')})"
     end
   end
 end

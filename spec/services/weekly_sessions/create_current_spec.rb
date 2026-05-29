@@ -27,6 +27,7 @@ RSpec.describe WeeklySessions::CreateCurrent do
     expect(first.data).to eq(second.data)
     expect(WeeklySession.count).to eq(1)
     expect(first.data.max_players).to eq(18)
-    expect(first.data.scheduled_at).to eq(Time.zone.parse("2026-05-25 20:00").utc)
+    # Quarta 2026-05-27 -> proxima segunda (racha) e 2026-06-01.
+    expect(first.data.scheduled_at).to eq(Time.zone.parse("2026-06-01 20:00").utc)
   end
 end

@@ -1,15 +1,25 @@
-<%
-  # Converte RACHA_WEEKDAY em numero do cron (0=domingo .. 6=sabado).
-  weekday_map = {
-    "sunday" => 0, "monday" => 1, "tuesday" => 2, "wednesday" => 3,
-    "thursday" => 4, "friday" => 5, "saturday" => 6
-  }
-  racha_weekday = ENV.fetch("RACHA_WEEKDAY", "monday").downcase
-  cron_weekday = weekday_map.fetch(racha_weekday, 1)
-%>
+# ==============================================================================
+# Sidekiq-Cron — Agendamento de jobs
+#
+# Padrao de cada entrada (use SEMPRE este formato):
+#
+#   nome_do_job:
+#     # O que o job faz. Periodicidade em linguagem natural.
+#     cron: "min hora dia-do-mes mes dia-da-semana"
+#     class: "NomeDoJob"
+#     queue: default
+#
+# Regras:
+#   - Apenas YAML puro. NAO escreva codigo Ruby/ERB aqui.
+#   - Logica dinamica (ex.: valores vindos de ENV) fica no initializer:
+#     config/initializers/sidekiq.rb
+#   - Campos do cron: "minuto hora dia-do-mes mes dia-da-semana"
+#     (dia-da-semana: 0=domingo .. 6=sabado)
+# ==============================================================================
 
 create_current_weekly_session:
-  cron: "0 8 * * <%= cron_weekday %>"
+  # Abre a sessao do proximo racha. Toda quarta-feira as 08h00.
+  # A data do racha (proxima ocorrencia de RACHA_WEEKDAY) e calculada no servico.
+  cron: "0 8 * * 3"
   class: "WeeklySessions::CreateCurrentJob"
   queue: default
-  description: "Cria a sessao semanal do racha as 08h do dia configurado em RACHA_WEEKDAY."
