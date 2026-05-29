@@ -34,6 +34,7 @@ O desenvolvimento e a validacao devem acontecer primeiro via Docker Compose.
 Comandos padrao:
 
 - Subir API e dependencias: `docker compose up api`.
+- Subir worker Sidekiq (para jobs e recurring): `docker compose up sidekiq`.
 - Preparar banco: `docker compose run --rm api bin/rails db:prepare`.
 - Rodar specs: `docker compose run --rm api bundle exec rspec`.
 - Rodar RuboCop: `docker compose run --rm api bin/rubocop`.

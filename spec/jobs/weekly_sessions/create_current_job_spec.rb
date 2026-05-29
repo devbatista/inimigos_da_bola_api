@@ -28,11 +28,12 @@ RSpec.describe WeeklySessions::CreateCurrentJob do
 
     expect { described_class.new.perform }.to change(WeeklySession, :count).by(1)
 
+    # Quarta 2026-05-27 -> proxima segunda (racha) e 2026-06-01.
     expect(Notifications::Push).to have_received(:new).with(
       hash_including(
         audience: :all,
         title: "Racha aberto",
-        body: a_string_including("racha")
+        body: "O racha de segunda (01/06) esta aberto. Voce vai?"
       )
     )
     expect(push).to have_received(:call)
