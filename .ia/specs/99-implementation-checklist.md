@@ -76,10 +76,10 @@ Use este arquivo para acompanhar o progresso do MVP. Marque cada item como concl
 - [x] Criar sessao automaticamente quando `current` for chamado.
 - [x] Calcular `scheduled_at` usando `RACHA_WEEKDAY` e `RACHA_TIME`.
 - [x] Usar `RACHA_MAX_PLAYERS` na criacao da sessao.
-- [ ] Agendar job recorrente para o dia configurado as 8h.
-- [ ] Disparar notificacao "Racha aberto" ao criar sessao.
-- [ ] Adicionar specs de autorizacao para sessoes.
-- [ ] Adicionar specs de idempotencia semanal do service/job.
+- [x] Agendar job recorrente para o dia configurado as 8h.
+- [x] Disparar notificacao "Racha aberto" ao criar sessao.
+- [x] Adicionar specs de autorizacao para sessoes.
+- [x] Adicionar specs de idempotencia semanal do service/job.
 
 ## 7. Presenca do Player
 
