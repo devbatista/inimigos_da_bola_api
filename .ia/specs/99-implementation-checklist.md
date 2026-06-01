@@ -129,16 +129,16 @@ Use este arquivo para acompanhar o progresso do MVP. Marque cada item como concl
 
 ## 10. Stats e Ranking
 
-- [ ] Implementar service `SessionStats::UpsertBatch`.
-- [ ] Implementar `POST /api/v1/weekly_sessions/:id/stats`.
-- [ ] Implementar `GET /api/v1/stats/leaderboard?period=month|year`.
-- [ ] Permitir lancamento de stats apenas para admin.
-- [ ] Registrar stats agregados por racha semanal.
-- [ ] Bloquear stats para presenca avulsa sem cadastro.
-- [ ] Permitir edicao ate 24h apos o racha.
-- [ ] Bloquear edicao depois de 24h.
-- [ ] Adicionar request specs de stats.
-- [ ] Adicionar specs de ranking mensal/anual.
+- [x] Implementar service `SessionStats::UpsertBatch`.
+- [x] Implementar `POST /api/v1/weekly_sessions/:id/stats`.
+- [x] Implementar `GET /api/v1/stats/leaderboard?period=month|year`.
+- [x] Permitir lancamento de stats apenas para admin.
+- [x] Registrar stats agregados por racha semanal.
+- [x] Bloquear stats para presenca avulsa sem cadastro.
+- [x] Permitir edicao ate 24h apos o racha.
+- [x] Bloquear edicao depois de 24h.
+- [x] Adicionar request specs de stats.
+- [x] Adicionar specs de ranking mensal/anual.
 
 ## 11. FCM e Notificacoes
 

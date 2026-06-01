@@ -33,8 +33,11 @@ Rails.application.routes.draw do
       post "weekly_sessions/:weekly_session_id/attendances", to: "weekly_sessions/attendances#create"
       post "weekly_sessions/:weekly_session_id/guest_attendances", to: "weekly_sessions/guest_attendances#create"
       delete "weekly_sessions/:weekly_session_id/guest_attendances/:id", to: "weekly_sessions/guest_attendances#destroy"
+      post "weekly_sessions/:weekly_session_id/stats", to: "weekly_sessions/stats#create"
 
       post "skill_ratings", to: "skill_ratings#create"
+
+      get "stats/leaderboard", to: "stats#leaderboard"
 
       get "sync", to: "sync#pull"
       post "sync/:entity", to: "sync#push", constraints: { entity: /[a-z_]+/ }

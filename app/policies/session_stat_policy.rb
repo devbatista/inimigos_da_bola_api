@@ -6,4 +6,8 @@ class SessionStatPolicy < ApplicationPolicy
   def update?
     user&.admin?
   end
+
+  def leaderboard?
+    user.present?
+  end
 end
