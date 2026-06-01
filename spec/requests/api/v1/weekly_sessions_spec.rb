@@ -31,7 +31,31 @@ RSpec.describe "Weekly sessions", type: :request do
       get "/api/v1/weekly_sessions/current"
 
       expect(response).to have_http_status(:ok)
-      expect(response.parsed_body).to include("max_players" => 20, "status" => "scheduled")
+      expect(response.parsed_body).to include(
+        "max_players" => 20,
+        "confirmed_attendances_count" => 0,
+        "status" => "scheduled"
+      )
+    end
+  end
+
+  describe "GET /api/v1/weekly_sessions/:id" do
+    it "returns the public confirmed attendances count" do
+      user = create(:user)
+      weekly_session = create(:weekly_session)
+      create(:attendance, weekly_session: weekly_session, status: :confirmed)
+      create(:attendance, :guest, weekly_session: weekly_session, status: :confirmed)
+      create(:attendance, weekly_session: weekly_session, status: :confirmed, waitlist_position: 1)
+      create(:attendance, :declined, weekly_session: weekly_session)
+      sign_in user
+
+      get "/api/v1/weekly_sessions/#{weekly_session.id}"
+
+      expect(response).to have_http_status(:ok)
+      expect(response.parsed_body).to include(
+        "id" => weekly_session.id,
+        "confirmed_attendances_count" => 2
+      )
     end
   end
 end
