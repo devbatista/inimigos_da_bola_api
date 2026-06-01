@@ -35,4 +35,17 @@ RSpec.describe WeeklySession, type: :model do
       expect(duplicate).to be_valid
     end
   end
+
+  describe "#confirmed_attendances_count" do
+    it "counts active confirmed attendances outside the waitlist" do
+      weekly_session = create(:weekly_session)
+      create(:attendance, weekly_session: weekly_session, status: :confirmed)
+      create(:attendance, :guest, weekly_session: weekly_session, status: :confirmed)
+      create(:attendance, weekly_session: weekly_session, status: :confirmed, waitlist_position: 1)
+      create(:attendance, :declined, weekly_session: weekly_session)
+      create(:attendance, weekly_session: weekly_session, deleted_at: Time.current)
+
+      expect(weekly_session.confirmed_attendances_count).to eq(2)
+    end
+  end
 end

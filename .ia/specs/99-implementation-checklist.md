@@ -109,7 +109,7 @@ Use este arquivo para acompanhar o progresso do MVP. Marque cada item como concl
 - [x] Exigir `guest_name`.
 - [x] Garantir que presenca avulsa nao crie `User`.
 - [x] Contabilizar avulso em confirmados e lista de espera.
-- [ ] Atualizar contador publico de confirmados.
+- [x] Atualizar contador publico de confirmados.
 - [x] Adicionar request specs de avulso por admin.
 - [x] Adicionar specs bloqueando usuario comum.
 
