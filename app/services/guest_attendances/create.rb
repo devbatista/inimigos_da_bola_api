@@ -18,6 +18,8 @@ module GuestAttendances
       )
       attendance.save!
 
+      notify_admins(attendance)
+
       ServiceResult.success(attendance)
     rescue ActiveRecord::RecordInvalid => e
       ServiceResult.failure("VALIDATION_ERROR", e.record.errors.full_messages.to_sentence)
@@ -27,6 +29,20 @@ module GuestAttendances
 
     def locked?
       Time.current >= @weekly_session.scheduled_at
+    end
+
+    # Avisa os admins sobre o avulso adicionado e dispara o sync silencioso.
+    def notify_admins(attendance)
+      Notifications::PushJob.perform_later(
+        audience: "admins",
+        title: "Avulso adicionado",
+        body: "#{@guest_name} foi adicionado ao racha.",
+        data: { weekly_session_id: @weekly_session.id, type: "guest_added", attendance_id: attendance.id }
+      )
+      Notifications::PushJob.perform_later(
+        audience: "all",
+        data: { weekly_session_id: @weekly_session.id, type: "sync" }
+      )
     end
 
     def compute_waitlist_position

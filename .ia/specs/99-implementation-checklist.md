@@ -142,19 +142,19 @@ Use este arquivo para acompanhar o progresso do MVP. Marque cada item como concl
 
 ## 11. FCM e Notificacoes
 
-- [ ] Implementar `POST /api/v1/users/me/fcm_token`.
-- [ ] Salvar `fcm_token` do usuario logado.
-- [ ] Implementar service `Notifications::Push`.
-- [ ] Implementar `Notifications::PushJob`.
-- [ ] Notificar todos quando o racha abrir.
-- [ ] Notificar todos 1h antes do racha.
-- [ ] Notificar player promovido da lista de espera.
-- [ ] Notificar admin sobre nova confirmacao.
-- [ ] Notificar admin sobre cancelamento.
-- [ ] Notificar admin sobre avulso adicionado/removido.
-- [ ] Enviar data message silenciosa para disparar sync.
-- [ ] Adicionar specs do endpoint de FCM.
-- [ ] Adicionar specs do payload de push.
+- [x] Implementar `POST /api/v1/users/me/fcm_token`.
+- [x] Salvar `fcm_token` do usuario logado.
+- [x] Implementar service `Notifications::Push`.
+- [x] Implementar `Notifications::PushJob`.
+- [x] Notificar todos quando o racha abrir.
+- [x] Notificar todos 1h antes do racha.
+- [x] Notificar player promovido da lista de espera.
+- [x] Notificar admin sobre nova confirmacao.
+- [x] Notificar admin sobre cancelamento.
+- [x] Notificar admin sobre avulso adicionado/removido.
+- [x] Enviar data message silenciosa para disparar sync.
+- [x] Adicionar specs do endpoint de FCM.
+- [x] Adicionar specs do payload de push.
 
 ## 12. Sync Pull
 

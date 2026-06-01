@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       end
 
       get "users/me", to: "users/me#show"
+      post "users/me/fcm_token", to: "users/me#update_fcm_token"
       post "users/invitations", to: "users/invitations#create"
       post "users/accept_invitation", to: "users/invitations#accept"
 

@@ -38,6 +38,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include ActiveSupport::Testing::TimeHelpers
+  config.include ActiveJob::TestHelper
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_paths = [
