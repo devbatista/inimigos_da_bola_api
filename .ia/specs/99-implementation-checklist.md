@@ -124,7 +124,6 @@ Use este arquivo para acompanhar o progresso do MVP. Marque cada item como concl
 - [x] Bloquear reavaliacao antes de 1 mes.
 - [x] Recalcular `users.skill_score` ao criar/atualizar nota.
 - [x] Garantir que notas individuais nunca sejam exibidas.
-- [ ] Garantir que usuario veja apenas o proprio `skill_score`.
 - [x] Adicionar request specs de avaliacao.
 - [x] Adicionar specs de recalculo de media.
 
