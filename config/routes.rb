@@ -29,6 +29,7 @@ Rails.application.routes.draw do
       get "club", to: "club#show"
       get "weekly_sessions/current", to: "weekly_sessions#current", as: :current_weekly_session
       get "weekly_sessions/:id", to: "weekly_sessions#show", as: :weekly_session
+      get "weekly_sessions/:weekly_session_id/attendances", to: "weekly_sessions/attendances#index"
       post "weekly_sessions/:weekly_session_id/attendances", to: "weekly_sessions/attendances#create"
       post "weekly_sessions/:weekly_session_id/guest_attendances", to: "weekly_sessions/guest_attendances#create"
       delete "weekly_sessions/:weekly_session_id/guest_attendances/:id", to: "weekly_sessions/guest_attendances#destroy"

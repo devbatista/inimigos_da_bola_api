@@ -87,7 +87,7 @@ Use este arquivo para acompanhar o progresso do MVP. Marque cada item como concl
 - [x] Implementar service `Attendance::Decline`.
 - [x] Implementar service `Attendance::PromoteWaitlist`.
 - [x] Implementar `POST /api/v1/weekly_sessions/:id/attendances`.
-- [ ] Implementar `GET /api/v1/weekly_sessions/:id/attendances`.
+- [x] Implementar `GET /api/v1/weekly_sessions/:id/attendances`.
 - [x] Confirmar presenca propria de player cadastrado.
 - [x] Cancelar/declinar presenca propria de player cadastrado.
 - [x] Bloquear confirmacao/cancelamento de outro player.
