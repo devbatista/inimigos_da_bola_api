@@ -18,8 +18,25 @@ Rails.application.config.after_initialize do
   next unless Sidekiq.server?
 
   schedule_file = Rails.root.join("config/schedule.yml")
-  next unless File.exist?(schedule_file)
+  if File.exist?(schedule_file)
+    schedule = YAML.safe_load(File.read(schedule_file), aliases: true) || {}
+    Sidekiq::Cron::Job.load_from_hash!(schedule) if schedule.any?
+  end
 
-  schedule = YAML.safe_load(File.read(schedule_file), aliases: true) || {}
-  Sidekiq::Cron::Job.load_from_hash!(schedule) if schedule.any?
+  # Lembrete "Em 1h tem racha": agendado dinamicamente a partir de
+  # RACHA_WEEKDAY/RACHA_TIME (logica com ENV nao pode ficar no schedule.yml).
+  weekday = WeeklySessions::CreateCurrent::WEEKDAYS[ENV.fetch("RACHA_WEEKDAY", "monday").downcase]
+  hour, minute = ENV.fetch("RACHA_TIME", "20:00").split(":").map(&:to_i)
+
+  if weekday && hour
+    reminder_hour = (hour - 1) % 24
+    reminder_weekday = hour.zero? ? (weekday - 1) % 7 : weekday
+
+    Sidekiq::Cron::Job.create(
+      name: "racha_reminder",
+      cron: "#{minute} #{reminder_hour} * * #{reminder_weekday}",
+      class: "Notifications::RachaReminderJob",
+      queue: "default"
+    )
+  end
 end
