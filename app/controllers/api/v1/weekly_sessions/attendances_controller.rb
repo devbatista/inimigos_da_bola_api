@@ -6,6 +6,19 @@ module Api
 
         before_action :authenticate_user!
 
+        def index
+          authorize ::Attendance, :index?
+
+          weekly_session = ::WeeklySession.active.find(params[:weekly_session_id])
+          attendances = weekly_session.attendances.active.order(
+            Arel.sql("CASE WHEN waitlist_position IS NULL THEN 0 ELSE 1 END"),
+            :waitlist_position,
+            :created_at
+          )
+
+          render json: AttendanceBlueprint.render_as_hash(attendances), status: :ok
+        end
+
         def create
           authorize ::Attendance, :create?
 
