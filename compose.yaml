@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    command: ./bin/rails server -b 0.0.0.0 -p 4500
+    command: bash -c "rm -f tmp/pids/server.pid && ./bin/rails server -b 0.0.0.0 -p 4500"
     env_file:
       - .env
     environment:
