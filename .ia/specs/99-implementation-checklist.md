@@ -210,12 +210,12 @@ Use este arquivo para acompanhar o progresso do MVP. Marque cada item como concl
 - [x] Criar `SkillRatingPolicy`.
 - [x] Criar `SessionStatPolicy`.
 - [x] Criar `UserPolicy`.
-- [ ] Adicionar policy specs para sessoes.
-- [ ] Adicionar policy specs para presencas.
-- [ ] Adicionar policy specs para avulsos.
-- [ ] Adicionar policy specs para avaliacoes.
-- [ ] Adicionar policy specs para stats.
-- [ ] Adicionar policy specs para convites.
+- [x] Adicionar policy specs para sessoes.
+- [x] Adicionar policy specs para presencas.
+- [x] Adicionar policy specs para avulsos.
+- [x] Adicionar policy specs para avaliacoes.
+- [x] Adicionar policy specs para stats.
+- [x] Adicionar policy specs para convites.
 
 ## 17. Qualidade e Validacao Final
 
