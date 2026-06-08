@@ -187,10 +187,10 @@ Use este arquivo para acompanhar o progresso do MVP. Marque cada item como concl
 
 ## 14. Jobs de Manutencao
 
-- [ ] Implementar `Sync::CleanupTombstonesJob`.
-- [ ] Remover fisicamente registros com `deleted_at` ha mais de 90 dias.
-- [ ] Agendar cleanup recorrente.
-- [ ] Adicionar specs do cleanup.
+- [x] Implementar `Sync::CleanupTombstonesJob`.
+- [x] Remover fisicamente registros com `deleted_at` ha mais de 90 dias.
+- [x] Agendar cleanup recorrente.
+- [x] Adicionar specs do cleanup.
 
 ## 15. Serializers e Privacidade
 

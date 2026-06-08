@@ -9,8 +9,8 @@ Rails.application.configure do
   # While tests run files are not watched, reloading is not necessary.
   config.enable_reloading = false
 
-  # Enfileira jobs em memoria (sem Redis) para que os testes possam inspecionar
-  # o que foi agendado com have_enqueued_job/perform_enqueued_jobs.
+  # Excecao de teste: em runtime real todos os jobs usam Sidekiq. Aqui o adapter
+  # em memoria evita Redis e permite have_enqueued_job/perform_enqueued_jobs.
   config.active_job.queue_adapter = :test
 
   # Eager loading loads your entire application. When running a single test locally,

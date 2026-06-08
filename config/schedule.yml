@@ -23,3 +23,9 @@ create_current_weekly_session:
   cron: "0 8 * * 3"
   class: "WeeklySessions::CreateCurrentJob"
   queue: default
+
+cleanup_sync_tombstones:
+  # Remove tombstones sincronizados com mais de 90 dias. Todos os dias as 03h30.
+  cron: "30 3 * * *"
+  class: "Sync::CleanupTombstonesJob"
+  queue: default

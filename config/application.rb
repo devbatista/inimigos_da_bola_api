@@ -23,6 +23,7 @@ module InimigosDaBolaApi
     #
     config.time_zone = "America/Sao_Paulo"
     config.active_record.default_timezone = :utc
+    config.active_job.queue_adapter = :sidekiq
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Only loads a smaller set of middleware suitable for API only apps.
