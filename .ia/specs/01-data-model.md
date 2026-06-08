@@ -23,7 +23,7 @@ Entidades sincronizaveis no MVP:
 Campos:
 
 - `id`: uuid v7, PK.
-- `email`: citext, unique, not null.
+- `email`: citext, unique, nullable enquanto o convite estiver pendente.
 - `name`: string, not null.
 - `phone`: string opcional.
 - `admin`: boolean, default `false`.
@@ -32,6 +32,8 @@ Campos:
 - `goalkeeper`: boolean, default `false`.
 - Campos Devise, incluindo `encrypted_password`.
 - `fcm_token`: string, quando push for implementado.
+- `invitation_token`: hash do token de convite, nunca o token puro.
+- `invitation_expires_at`: expiracao do convite.
 - Campos globais de sync.
 
 Regras:
@@ -44,6 +46,7 @@ Regras:
 - Outros usuarios nao veem notas nem medias de terceiros.
 - Senha nunca e salva em texto puro.
 - `encrypted_password` nunca vai para o app/Drift.
+- Convite pendente pode existir sem email; no aceite, o jogador informa email e senha.
 
 ## weekly_sessions
 
@@ -151,4 +154,3 @@ Uso:
 
 - Garante idempotencia do sync.
 - Pode ser substituida por Redis com TTL, mas tabela e a opcao simples para o MVP.
-

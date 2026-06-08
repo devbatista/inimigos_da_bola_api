@@ -13,12 +13,18 @@ RSpec.describe User, type: :model do
   end
 
   describe "validations" do
-    it "requires name and email" do
+    it "requires name and email for active users" do
       user = build(:user, name: nil, email: nil)
 
       expect(user).not_to be_valid
       expect(user.errors[:name]).to be_present
       expect(user.errors[:email]).to be_present
+    end
+
+    it "allows pending invitations without email" do
+      user = build(:user, email: nil, encrypted_password: "", invitation_accepted_at: nil)
+
+      expect(user).to be_valid
     end
 
     it "limits skill score to 0 through 100" do

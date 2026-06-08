@@ -58,8 +58,11 @@ Use este arquivo para acompanhar o progresso do MVP. Marque cada item como concl
 - [x] Criar usuario convidado com `admin: false`.
 - [x] Criar usuario convidado com `player_type: casual`.
 - [x] Criar usuario convidado sem senha ativa.
+- [x] Criar convite por link compartilhavel sem envio de email.
+- [x] Retornar token visivel apenas uma vez e salvar apenas hash.
+- [x] Expirar convite em 7 dias e invalidar apos aceite.
 - [x] Implementar `POST /api/v1/users/accept_invitation`.
-- [x] No aceite, definir senha e confirmacao.
+- [x] No aceite, definir email, senha e confirmacao.
 - [x] No aceite, permitir escolher `player_type`.
 - [x] No aceite, permitir definir `goalkeeper`.
 - [x] No aceite, ativar usuario e emitir tokens.

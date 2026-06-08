@@ -197,6 +197,7 @@ Codes relevantes para o cliente mobile:
 - `SKILL_RATING_SELF_NOT_ALLOWED` (`422`): tentativa de autoavaliação.
 - `SKILL_RATING_TOO_SOON` (`422`): tentativa de reavaliar antes de 1 mês.
 - `SYNC_CONFLICT` (`409`): versão do registro no servidor diverge da enviada pelo cliente.
+- `invalid_invitation` (`422`): convite inexistente, expirado ou já usado.
 
 Exemplo de token expirado (`401`):
 
@@ -205,6 +206,60 @@ Exemplo de token expirado (`401`):
   "error": {
     "code": "token_expired",
     "message": "Token expirado."
+  }
+}
+```
+
+## Convites
+
+### `POST /api/v1/users/invitations` (admin)
+
+Cria um convite por link compartilhável. O backend não envia email e retorna o token puro apenas nessa resposta.
+
+```json
+{
+  "name": "Rafael Batista",
+  "player_type": "casual",
+  "goalkeeper": false
+}
+```
+
+Resposta `201 Created`:
+
+```json
+{
+  "id": "uuid",
+  "name": "Rafael Batista",
+  "player_type": "casual",
+  "goalkeeper": false,
+  "invitation_token": "<token-visivel-uma-unica-vez>",
+  "invitation_url": "inimigosdabola://accept-invitation?invitation_token=<token-visivel-uma-unica-vez>",
+  "expires_at": "2026-06-15T20:00:00Z"
+}
+```
+
+O token expira em 7 dias, é one-time e no banco fica salvo apenas como hash.
+
+### `POST /api/v1/users/accept_invitation`
+
+```json
+{
+  "token": "<token>",
+  "name": "Rafael Batista",
+  "email": "rafael@email.com",
+  "password": "senha123",
+  "player_type": "casual",
+  "goalkeeper": false
+}
+```
+
+`invitation_token` também é aceito como alias de `token`. Convite inválido, expirado ou já usado retorna:
+
+```json
+{
+  "error": {
+    "code": "invalid_invitation",
+    "message": "Convite inválido ou expirado."
   }
 }
 ```

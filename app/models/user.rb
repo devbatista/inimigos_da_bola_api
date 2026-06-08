@@ -1,7 +1,7 @@
 require "digest"
 
 class User < ApplicationRecord
-  INVITATION_TOKEN_TTL = 30.days
+  INVITATION_TOKEN_TTL = 7.days
 
   include Devise::JWT::RevocationStrategies::JTIMatcher
   include SyncRecord
@@ -36,9 +36,10 @@ class User < ApplicationRecord
 
   validates :name, presence: true
   validates :email,
-    presence: true,
     format: { with: Devise.email_regexp },
-    uniqueness: { conditions: -> { active } }
+    uniqueness: { conditions: -> { active } },
+    allow_nil: true
+  validate :email_required_unless_pending_invitation
   validates :password,
     confirmation: true,
     length: { within: Devise.password_length },
@@ -50,7 +51,11 @@ class User < ApplicationRecord
   end
 
   def self.find_pending_invitation(raw_token)
-    active.find_by(invitation_token: digest_invitation_token(raw_token.to_s), invitation_accepted_at: nil)
+    active
+      .where(invitation_accepted_at: nil)
+      .where(invitation_token: digest_invitation_token(raw_token.to_s))
+      .where("invitation_expires_at > ?", Time.current)
+      .first
   end
 
   def issue_invitation!
@@ -58,19 +63,23 @@ class User < ApplicationRecord
     update!(
       invitation_token: self.class.digest_invitation_token(raw_token),
       invitation_sent_at: Time.current,
+      invitation_expires_at: INVITATION_TOKEN_TTL.from_now,
       invitation_accepted_at: nil
     )
 
     raw_token
   end
 
-  def accept_invitation!(password:, password_confirmation:, player_type:, goalkeeper:)
+  def accept_invitation!(email:, password:, password_confirmation:, player_type:, goalkeeper:, name: nil)
     update!(
+      name: name.presence || self.name,
+      email: email.to_s.downcase,
       password: password,
-      password_confirmation: password_confirmation,
+      password_confirmation: password_confirmation.presence || password,
       player_type: player_type.presence || "casual",
       goalkeeper: ActiveModel::Type::Boolean.new.cast(goalkeeper),
       invitation_token: nil,
+      invitation_expires_at: nil,
       invitation_accepted_at: Time.current
     )
   end
@@ -79,5 +88,16 @@ class User < ApplicationRecord
 
   def assign_jti
     self.jti ||= SecureRandom.uuid
+  end
+
+  def email_required_unless_pending_invitation
+    return if email.present?
+    return if pending_invitation?
+
+    errors.add(:email, :blank)
+  end
+
+  def pending_invitation?
+    invitation_accepted_at.nil? && encrypted_password.blank?
   end
 end

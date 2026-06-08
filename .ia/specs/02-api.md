@@ -72,10 +72,14 @@ Endpoints:
 
 Fluxo:
 
-- Admin convida por email/nome.
-- Server cria `User` convidado com `admin: false`, `player_type: casual` inicial e sem senha.
-- App de convite pede senha, confirmacao, `player_type` com `casual` pre-selecionado e `goalkeeper`.
-- Ao aceitar, server define senha, ativa usuario e emite tokens.
+- Admin cria convite por nome, `player_type` e `goalkeeper`; email nao entra na criacao.
+- Server cria `User` convidado com `admin: false`, sem senha e sem email.
+- Server retorna o token puro uma unica vez e a URL `inimigosdabola://accept-invitation?invitation_token=...`.
+- Server salva apenas o hash do token.
+- Convite expira em 7 dias e e one-time.
+- App de aceite pede nome, email, senha, `player_type` e `goalkeeper`.
+- Ao aceitar, server define email/senha, invalida o convite, ativa usuario e emite tokens.
+- Convite invalido, expirado ou ja usado retorna `invalid_invitation`.
 
 ## Sessao Semanal
 
@@ -203,4 +207,3 @@ Body:
   "fcm_token": "token"
 }
 ```
-
