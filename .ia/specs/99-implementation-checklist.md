@@ -301,11 +301,11 @@ Objetivo: deixar o app mobile testavel contra backend local/docker com dados rea
 
 ## 19. Itens Explicitamente Fora do Escopo
 
-- [ ] Confirmar que nao foi criada tabela de partidas curtas.
-- [ ] Confirmar que nao foi criada tabela de times sorteados.
-- [ ] Confirmar que nao foi criada tabela de placar.
-- [ ] Confirmar que nao foi criada tabela de cronometro.
-- [ ] Confirmar que nao foi criado multi-tenant.
-- [ ] Confirmar que nao foram criados pagamentos.
-- [ ] Confirmar que nao foi criado chat.
-- [ ] Confirmar que nao foi criado web admin.
+- [ ] Confirmar que não foi criada tabela de partidas curtas.
+- [ ] Confirmar que não foi criada tabela de times sorteados.
+- [ ] Confirmar que não foi criada tabela de placar.
+- [ ] Confirmar que não foi criada tabela de cronometro.
+- [ ] Confirmar que não foi criado multi-tenant.
+- [ ] Confirmar que não foram criados pagamentos.
+- [ ] Confirmar que não foi criado chat.
+- [ ] Confirmar que não foi criado web admin.
