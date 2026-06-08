@@ -8,12 +8,11 @@ Rails.application.routes.draw do
       password: "password"
     }
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
-
   namespace :api do
     namespace :v1 do
+      # Health check versionado para manter toda a superficie HTTP publica em /api/v1.
+      get "up", to: "/rails/health#show", as: :rails_health_check
+
       namespace :auth do
         post "sign_in", to: "sessions#create"
         delete "sign_out", to: "sessions#destroy"

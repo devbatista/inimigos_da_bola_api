@@ -17,9 +17,9 @@ module WeeklySessions
 
       ServiceResult.success(weekly_session)
     rescue KeyError
-      ServiceResult.failure("VALIDATION_ERROR", "Dia do racha invalido.")
+      ServiceResult.failure("VALIDATION_ERROR", "Dia do racha inválido.")
     rescue ArgumentError
-      ServiceResult.failure("VALIDATION_ERROR", "Horario do racha invalido.")
+      ServiceResult.failure("VALIDATION_ERROR", "Horário do racha inválido.")
     end
 
     private
@@ -33,7 +33,7 @@ module WeeklySessions
     end
 
     # Proxima ocorrencia do dia do racha a partir de hoje (inclusive).
-    # Como o job abre a sessao na quarta anterior, isso resolve para o racha
+    # Como o job abre a sessão na quarta anterior, isso resolve para o racha
     # da semana seguinte.
     def scheduled_date
       today = Time.zone.today

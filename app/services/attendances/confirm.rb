@@ -33,7 +33,7 @@ module Attendances
       Time.current >= @weekly_session.scheduled_at
     end
 
-    # Avisa os admins sobre a nova confirmacao e dispara o sync silencioso.
+    # Avisa os admins sobre a nova confirmação e dispara o sync silencioso.
     def notify_admins(attendance)
       Notifications::PushJob.perform_later(
         audience: "admins",

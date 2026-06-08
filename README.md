@@ -1,16 +1,16 @@
 # Inimigos da Bola API
 
-API Rails do MVP do Inimigos da Bola.
+API Rails do MVP Inimigos da Bola.
 
 ## Setup Local
 
-O projeto e Docker-first. Para subir a API com PostgreSQL e Redis:
+O projeto é Docker-first. Para subir a API com PostgreSQL e Redis:
 
 ```sh
 docker compose up api
 ```
 
-A API fica disponivel em:
+A API fica disponível em:
 
 ```text
 API_HOST=http://localhost:4500
@@ -22,7 +22,7 @@ Preparar ou atualizar o banco:
 docker compose run --rm api bin/rails db:prepare
 ```
 
-Variaveis de ambiente locais ficam em `.env`. O arquivo nao e versionado; use `.env_example` como base.
+Variáveis de ambiente locais ficam em `.env`. O arquivo não é versionado; use `.env_example` como base.
 
 Rodar a suite:
 
@@ -34,6 +34,30 @@ Rodar lint:
 
 ```sh
 docker compose run --rm api bin/rubocop
+```
+
+Rodar Brakeman:
+
+```sh
+docker compose run --rm api bin/brakeman
+```
+
+Rodar Bundler Audit:
+
+```sh
+docker compose run --rm api bin/bundler-audit check
+```
+
+Subir o worker Sidekiq:
+
+```sh
+docker compose up sidekiq
+```
+
+Health check:
+
+```text
+GET http://localhost:4500/api/v1/up
 ```
 
 ## Mobile
@@ -50,6 +74,18 @@ Para Android emulator:
 ANDROID_EMULATOR_API_BASE_URL=http://10.0.2.2:4500/api/v1
 ```
 
+Para iPhone físico na mesma rede Wi-Fi, use o IP local da máquina que roda o Docker:
+
+```sh
+ipconfig getifaddr en0
+```
+
+Exemplo:
+
+```text
+IOS_DEVICE_API_BASE_URL=http://192.168.15.12:4500/api/v1
+```
+
 Headers esperados:
 
 ```http
@@ -57,7 +93,7 @@ Content-Type: application/json
 Authorization: Bearer <access_token>
 ```
 
-Endpoints de sync push tambem devem enviar:
+Endpoints de sync push também devem enviar:
 
 ```http
 Idempotency-Key: <mutation_id>
@@ -135,11 +171,11 @@ Body:
 }
 ```
 
-Resposta `200 OK`: mesmo shape do login, com `access_token` e `refresh_token` novos. O `refresh_token` anterior e revogado.
+Resposta `200 OK`: mesmo shape do login, com `access_token` e `refresh_token` novos. O `refresh_token` anterior é revogado.
 
 ### Erros
 
-Envelope padrao:
+Envelope padrão:
 
 ```json
 {
@@ -153,14 +189,14 @@ Envelope padrao:
 Codes relevantes para o cliente mobile:
 
 - `token_expired` (`401`): access token JWT expirado. Mobile deve chamar `POST /api/v1/auth/refresh`.
-- `UNAUTHORIZED` (`401`): credenciais invalidas, refresh token invalido/revogado ou requisicao sem token.
-- `FORBIDDEN` (`403`): autenticado, mas sem permissao para a acao.
+- `UNAUTHORIZED` (`401`): credenciais inválidas, refresh token inválido/revogado ou requisição sem token.
+- `FORBIDDEN` (`403`): autenticado, mas sem permissão para a ação.
 - `NOT_FOUND` (`404`): recurso inexistente.
-- `VALIDATION_ERROR` (`422`): payload invalido.
-- `ATTENDANCE_LOCKED` (`422`): presenca ja nao pode mais ser alterada (depois de `scheduled_at`).
-- `SKILL_RATING_SELF_NOT_ALLOWED` (`422`): tentativa de autoavaliacao.
-- `SKILL_RATING_TOO_SOON` (`422`): tentativa de reavaliar antes de 1 mes.
-- `SYNC_CONFLICT` (`409`): versao do registro no servidor diverge da enviada pelo cliente.
+- `VALIDATION_ERROR` (`422`): payload inválido.
+- `ATTENDANCE_LOCKED` (`422`): presença já não pode mais ser alterada (depois de `scheduled_at`).
+- `SKILL_RATING_SELF_NOT_ALLOWED` (`422`): tentativa de autoavaliação.
+- `SKILL_RATING_TOO_SOON` (`422`): tentativa de reavaliar antes de 1 mês.
+- `SYNC_CONFLICT` (`409`): versão do registro no servidor diverge da enviada pelo cliente.
 
 Exemplo de token expirado (`401`):
 
@@ -173,13 +209,13 @@ Exemplo de token expirado (`401`):
 }
 ```
 
-## Endpoints minimos para mobile
+## Endpoints mínimos para mobile
 
 Todos exigem `Authorization: Bearer <access_token>`.
 
 ### `GET /api/v1/users/me`
 
-Retorna o usuario autenticado. Resposta `200`:
+Retorna o usuário autenticado. Resposta `200`:
 
 ```json
 {
@@ -196,13 +232,13 @@ Retorna o usuario autenticado. Resposta `200`:
 
 ### `POST /api/v1/weekly_sessions/:id/attendances`
 
-Confirma ou cancela presenca do proprio player. Body:
+Confirma ou cancela presença do próprio player. Body:
 
 ```json
 { "status": "confirmed" }
 ```
 
-`status` aceita `confirmed` ou `declined`. Quando lotado, a confirmacao entra na lista de espera com `waitlist_position > 0`. Apos `scheduled_at`, retorna `ATTENDANCE_LOCKED`.
+`status` aceita `confirmed` ou `declined`. Quando lotado, a confirmação entra na lista de espera com `waitlist_position > 0`. Após `scheduled_at`, retorna `ATTENDANCE_LOCKED`.
 
 ### `POST /api/v1/weekly_sessions/:id/guest_attendances` (admin)
 
@@ -212,7 +248,7 @@ Body:
 { "guest_name": "Visitante" }
 ```
 
-Cria presenca avulsa confirmada. Avulsos contam para `max_players`. Usuario comum recebe `403`.
+Cria presença avulsa confirmada. Avulsos contam para `max_players`. Usuário comum recebe `403`.
 
 ### `DELETE /api/v1/weekly_sessions/:id/guest_attendances/:attendance_id` (admin)
 
@@ -226,7 +262,7 @@ Body:
 { "evaluated_user_id": "uuid", "score": 80 }
 ```
 
-`score` integer 0..100. Recalcula `users.skill_score` do avaliado. Autoavaliacao bloqueada e reavaliacao so depois de 1 mes da ultima.
+`score` integer 0..100. Recalcula `users.skill_score` do avaliado. Autoavaliação bloqueada e reavaliação só depois de 1 mês da última.
 
 ### `GET /api/v1/sync`
 
@@ -249,13 +285,13 @@ Resposta:
 }
 ```
 
-Tombstones vem com `deleted_at` preenchido. `skill_ratings` nao sao expostos em pull. `users` nao inclui `encrypted_password`, `jti`, `fcm_token`, tokens de recuperacao ou de convite.
+Tombstones vêm com `deleted_at` preenchido. `skill_ratings` não são expostos em pull. `users` não inclui `encrypted_password`, `jti`, `fcm_token`, tokens de recuperação ou de convite.
 
 ### `POST /api/v1/sync/:entity`
 
-Push sync. Entidades aceitas: `users`, `weekly_sessions`, `session_stats`, `skill_ratings`. `attendances` e bloqueado (`403 FORBIDDEN`).
+Push sync. Entidades aceitas: `users`, `weekly_sessions`, `session_stats`, `skill_ratings`. `attendances` é bloqueado (`403 FORBIDDEN`).
 
-Headers obrigatorios:
+Headers obrigatórios:
 
 ```http
 Content-Type: application/json
@@ -271,17 +307,17 @@ Body:
 }
 ```
 
-`op` aceita `create`, `update`, `delete`. Em `update`/`delete`, `record.version` deve casar com a versao no servidor — divergencia retorna `409 SYNC_CONFLICT`. A mesma `Idempotency-Key` aplicada novamente retorna `200` com `{ "idempotent_replay": true }` sem reaplicar a mutacao.
+`op` aceita `create`, `update`, `delete`. Em `update`/`delete`, `record.version` deve casar com a versão no servidor. Divergência retorna `409 SYNC_CONFLICT`. A mesma `Idempotency-Key` aplicada novamente retorna `200` com `{ "idempotent_replay": true }` sem reaplicar a mutação.
 
-Autorizacao por entidade:
+Autorização por entidade:
 
-- `users`: apenas o proprio usuario.
+- `users`: apenas o próprio usuário.
 - `weekly_sessions` / `session_stats`: apenas admin.
-- `skill_ratings`: apenas o proprio avaliador.
+- `skill_ratings`: apenas o próprio avaliador.
 
 ## CORS
 
-Em desenvolvimento, a API aceita qualquer origem por padrao. Para restringir:
+Em desenvolvimento, a API aceita qualquer origem por padrão. Para restringir:
 
 ```sh
 CORS_ORIGINS=http://localhost:5173,http://10.0.2.2:4500

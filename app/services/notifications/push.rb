@@ -1,7 +1,7 @@
 module Notifications
-  # Resolve a audiencia em tokens FCM, monta o payload (notificacao visivel ou
-  # data message silenciosa) e entrega o push. A entrega real no FCM ainda e um
-  # stub que apenas loga; o ponto de integracao HTTP fica isolado em #deliver.
+  # Resolve a audiência em tokens FCM, monta o payload (notificação visível ou
+  # data message silenciosa) e entrega o push. A entrega real no FCM ainda é um
+  # stub que apenas loga; o ponto de integração HTTP fica isolado em #deliver.
   class Push
     AUDIENCES = %i[all admins user].freeze
 
@@ -39,7 +39,7 @@ module Notifications
     end
 
     # Sem title/body a mensagem e silenciosa: serve apenas para disparar o sync
-    # no app (data message sem notificacao visivel).
+    # no app (data message sem notificação visível).
     def silent?
       @title.blank? && @body.blank?
     end
@@ -50,8 +50,8 @@ module Notifications
       payload
     end
 
-    # Stub de entrega. A integracao real com o FCM HTTP v1 (credenciais,
-    # request HTTP e tratamento de tokens invalidos) entra exatamente aqui.
+    # Stub de entrega. A integração real com o FCM HTTP v1 (credenciais,
+    # request HTTP e tratamento de tokens inválidos) entra exatamente aqui.
     def deliver(tokens, payload)
       Rails.logger.info(
         "[Notifications::Push] audience=#{@audience} silent=#{silent?} " \

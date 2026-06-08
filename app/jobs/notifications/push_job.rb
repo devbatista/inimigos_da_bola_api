@@ -1,6 +1,6 @@
 module Notifications
   # Wrapper assincrono de Notifications::Push. Os services chamam
-  # perform_later para nao bloquear a request HTTP com o envio do FCM.
+  # perform_later para não bloquear a request HTTP com o envio do FCM.
   class PushJob < ApplicationJob
     queue_as :default
 

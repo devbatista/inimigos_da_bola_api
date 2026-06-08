@@ -44,7 +44,7 @@ module SessionStats
       Time.current > @weekly_session.scheduled_at + EDIT_WINDOW
     end
 
-    # Avulsos sem cadastro nao tem user_id, entao so jogadores com presenca
+    # Avulsos sem cadastro não têm user_id, então só jogadores com presença
     # registrada no racha podem receber stats.
     def invalid_user_ids
       requested = @stats.map { |entry| entry[:user_id] }.compact.uniq

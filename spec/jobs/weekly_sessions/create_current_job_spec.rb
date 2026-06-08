@@ -33,7 +33,7 @@ RSpec.describe WeeklySessions::CreateCurrentJob do
       hash_including(
         audience: :all,
         title: "Racha aberto",
-        body: "O racha de segunda (01/06) esta aberto. Voce vai?"
+        body: "O racha de segunda (01/06) está aberto. Você vai?"
       )
     )
     expect(push).to have_received(:call)

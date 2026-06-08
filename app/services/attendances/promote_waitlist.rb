@@ -22,7 +22,7 @@ module Attendances
 
     private
 
-    # Avisa o jogador promovido. Avulsos (sem user_id) nao recebem push, mas o
+    # Avisa o jogador promovido. Avulsos (sem user_id) não recebem push, mas o
     # sync silencioso e disparado para atualizar a lista em todos os apps.
     def notify_promoted(attendance)
       if attendance.user_id

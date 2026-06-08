@@ -219,17 +219,17 @@ Use este arquivo para acompanhar o progresso do MVP. Marque cada item como concl
 
 ## 17. Qualidade e Validacao Final
 
-- [ ] Garantir que todos os endpoints estejam em `/api/v1`.
-- [ ] Garantir que erros usem envelope padrao.
-- [ ] Garantir mensagens de usuario em pt-BR com acentuacao correta.
-- [ ] Garantir comentarios de codigo em portugues quando existirem.
-- [ ] Garantir identificadores em ingles.
-- [ ] Rodar suite completa RSpec.
-- [ ] Rodar RuboCop.
-- [ ] Rodar Brakeman.
-- [ ] Rodar Bundler Audit.
-- [ ] Atualizar README com setup local.
-- [ ] Revisar `AGENTS.md` e specs apos implementacao.
+- [x] Garantir que todos os endpoints estejam em `/api/v1`.
+- [x] Garantir que erros usem envelope padrao.
+- [x] Garantir mensagens de usuario em pt-BR com acentuacao correta.
+- [x] Garantir comentarios de codigo em portugues quando existirem.
+- [x] Garantir identificadores em ingles.
+- [x] Rodar suite completa RSpec.
+- [x] Rodar RuboCop.
+- [x] Rodar Brakeman.
+- [x] Rodar Bundler Audit.
+- [x] Atualizar README com setup local.
+- [x] Revisar `AGENTS.md` e specs apos implementacao.
 
 ## 18. Prioridade para Teste Mobile
 

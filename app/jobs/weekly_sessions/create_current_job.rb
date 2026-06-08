@@ -7,7 +7,7 @@ module WeeklySessions
       return result unless result.success?
 
       weekly_session = result.data
-      # Apenas dispara notificacao quando a sessao foi recem-criada, para
+      # Apenas dispara notificação quando a sessão foi recém-criada, para
       # manter a semana idempotente caso o job rode mais de uma vez.
       broadcast_session_open(weekly_session) if weekly_session.previously_new_record?
 
@@ -20,7 +20,7 @@ module WeeklySessions
       Notifications::Push.new(
         audience: :all,
         title: "Racha aberto",
-        body: "O racha de #{racha_label(weekly_session.scheduled_at)} esta aberto. Voce vai?",
+        body: "O racha de #{racha_label(weekly_session.scheduled_at)} está aberto. Você vai?",
         data: { weekly_session_id: weekly_session.id, type: "weekly_session_open" }
       ).call
     end
